@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+				transition: .2s;
+				list-style-type: none;
+			}
+			body{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			div{
+				width: 500px;
+				height: 180px;
+				margin: 10px auto;
+			}
+			ul li{
+				padding-top: 2px;
+				padding-bottom: 2px;
+				padding-right: 10px;
+				user-select: none;
+				padding-left: 10px;
+				display: inline-block;
+			}
+			.label-over{
+				color: #000000;
+				background-color: #aaddaa;
+			}
+			.label-out{
+				color: #FFFFFF;
+				background-color: #000000;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="showImg">
+			<img src="img/dd_scroll_1.jpg">
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+		</div>
+		<script>
+			function $(id){
+				return document.getElementById(id);
+			}
+			var imgURL=new Array(
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_1.jpg",
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_2.jpg",
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_3.jpg",
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_4.jpg",
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_5.jpg",
+				"https://cdn.jsdelivr.net/gh/lgzzk1024/lgzzk@main/图片轮播/dd_scroll_6.jpg",
+			);
+			var i=0;
+			var showImg=document.getElementById("showImg");
+			var imgs=showImg.getElementsByTagName("img");
+			var lis=showImg.getElementsByTagName("li");
+			function styleOut(){
+				for(var i=0;i<lis.length;i++){
+					lis[i].index=i;
+					lis[i].className="label-out"
+				}
+			}
+			function showImgs(){
+				if(i==imgURL.length) i=0;
+				imgs[0].src=imgURL[i];
+				styleOut();
+				lis[i++].className="label-over";
+			}
+			styleOut();
+			showImgs()
+			var t=setInterval(showImgs,1000);
+			var t1;
+			for(var li of lis){
+				li.onclick=function (){
+					clearInterval(t);
+					clearTimeout(t1);
+					t1=setTimeout(function (){
+						t=setInterval(showImgs,1000);
+					},3000);
+					styleOut();
+					this.className="label-over"
+					imgs[0].src=imgURL[this.index];
+ 				}
+			}
+		</script>
+	</body>
+</html>
